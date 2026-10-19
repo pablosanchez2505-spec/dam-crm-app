@@ -1,0 +1,59 @@
+<ion-content class="ion-padding">
+  <div class="login-wrapper">
+    <ion-card class="login-card">
+      <ion-card-header>
+        <ion-card-title>DAM CRM · Acceso</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-input
+              type="email"
+              label="Email"
+              labelPlacement="stacked"
+              formControlName="email"
+              autocomplete="email"
+            ></ion-input>
+          </ion-item>
+          @if (loginForm.controls['email'].touched && loginForm.controls['email'].invalid) {
+            <p class="error">Introduce un email válido.</p>
+          }
+
+          <ion-item>
+            <ion-input
+              type="password"
+              label="Contraseña"
+              labelPlacement="stacked"
+              formControlName="password"
+              autocomplete="current-password"
+            ></ion-input>
+          </ion-item>
+          @if (loginForm.controls['password'].touched && loginForm.controls['password'].invalid) {
+            <p class="error">Mínimo 6 caracteres.</p>
+          }
+
+          <ion-button
+            class="ion-margin-top"
+            type="submit"
+            expand="block"
+            [disabled]="loginForm.invalid || loading"
+          >
+            @if (loading) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              Entrar
+            }
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    duration="3000"
+    color="danger"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

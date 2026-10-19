@@ -1,0 +1,22 @@
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.image-card {
+  margin: 4px 0;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.file-name {
+  font-size: 0.95rem;
+  word-break: break-all;
+}

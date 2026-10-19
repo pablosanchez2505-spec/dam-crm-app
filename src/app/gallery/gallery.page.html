@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Galería de imágenes</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">Clientes</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" aria-label="Cerrar sesión">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading) {
+    <div class="center"><ion-spinner name="crescent"></ion-spinner></div>
+  } @else {
+    <ion-grid>
+      <ion-row>
+        @for (img of images; track img.name) {
+          <ion-col size="12" size-sm="6" size-md="4" size-lg="3">
+            <ion-card class="image-card">
+              <img [src]="img.url" [alt]="img.name" loading="lazy" />
+              <ion-card-header>
+                <ion-card-title class="file-name">{{ img.name }}</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        } @empty {
+          <ion-col size="12">
+            <p class="center">No hay imágenes en el bucket.</p>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  }
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    duration="3000"
+    color="danger"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>
